@@ -1,0 +1,4 @@
+## Stripe, Devise, Rails
+
+- Ruby 2.2.4
+- Rails 4.2.6
