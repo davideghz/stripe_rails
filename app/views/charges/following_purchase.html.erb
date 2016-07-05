@@ -1,0 +1,11 @@
+<h2>
+  This page allows registered user, which already made at least one purchase on the website, to purchase a new product
+  without providing credit card info again
+</h2>
+
+<% if current_user %>
+  <p>The amount is set to <%= @amount %> cents.</p>
+  <%= button_to "BUY NOW", { controller: :charges, action: :charge_following_purchase } %>
+<% else %>
+  <p><%= link_to "Log-in", new_user_session_path %> to proceed. </p>
+<% end %>

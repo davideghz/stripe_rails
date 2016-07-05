@@ -21,7 +21,10 @@ class ChargesController < ApplicationController
         :source  => params[:stripeToken]
     )
 
-    charge = Stripe::Charge.create(
+    current_user.customer_id = customer.id if current_user
+    current_user.save
+
+    Stripe::Charge.create(
         :customer    => customer.id,
         :amount      => @amount,
         :description => 'Example charge checkout.js',
@@ -56,6 +59,27 @@ class ChargesController < ApplicationController
       flash[:error] = e.message
       redirect_to root_path
     end
+
+  end
+
+  def following_purchase
+    @amount = 1000
+  end
+
+  def charge_following_purchase
+
+    @amount = 1000
+
+    customer_id = current_user.customer_id
+
+    Stripe::Charge.create(
+        amount: @amount,
+        currency: 'usd',
+        customer: customer_id
+    )
+
+    flash[:success] = "Enjoy! You just spent #{@amount} cents!"
+    redirect_to following_purchase_charges_path
 
   end
 

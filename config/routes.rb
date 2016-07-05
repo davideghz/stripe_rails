@@ -10,8 +10,9 @@ Rails.application.routes.draw do
     collection do
       get :checkoutjs
       get :customform
+      get :following_purchase
       post :charge_customform
-      get :charge_customform
+      post :charge_following_purchase
     end
   end
 
