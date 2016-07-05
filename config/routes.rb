@@ -4,6 +4,10 @@ Rails.application.routes.draw do
 
   devise_for :users
 
-  resources :charges
+  resources :charges, only: [:create] do
+    collection do
+      get :checkoutjs
+    end
+  end
 
 end

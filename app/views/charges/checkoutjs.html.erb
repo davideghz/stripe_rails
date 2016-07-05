@@ -1,3 +1,9 @@
+<h2>
+  This page shows the classic Stripe blue button provided by the checkout.js library.
+</h2>
+<p>If you <%= link_to "log-in", new_user_session_path %> the form will be automatically pre-filled with your data. </p>
+<p>The amount is set to <%= @amount %> cents.</p>
+
 <%= form_tag charges_path do %>
     <article>
       <% if flash[:error].present? %>
@@ -5,18 +11,23 @@
             <p><%= flash[:error] %></p>
           </div>
       <% end %>
-      <label class="amount">
-        <span>Amount: $5.00</span>
-      </label>
     </article>
 
     <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
             data-email="<%= current_user.email if current_user %>"
             data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
             data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
-            data-description="A month's subscription"
+            data-description="checkoout.js test form"
             data-amount="<%= @amount %>"
             data-panel-label="Pay with card {amount}"
             data-locale="auto"
             data-allow-remember-me="false"></script>
 <% end %>
+<br>
+<h3>test data:</h3>
+<ul>
+  <li>card number 4242 4242 4242 4242;</li>
+  <li>any three-digit CVC;</li>
+  <li>any expiry date in the future.</li>
+</ul>
+<p>Submitting the form should bring up the successful charge page</p>
