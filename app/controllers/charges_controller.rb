@@ -43,14 +43,20 @@ class ChargesController < ApplicationController
     @amount = 99
 
     # Get the credit card details submitted by the form
-    token = params[:stripeToken]
+    customer = Stripe::Customer.create(
+        :email => params[:email],
+        :source  => params[:stripeToken]
+    )
+
+    current_user.customer_id = customer.id if current_user
+    current_user.save
 
     # Create the charge on Stripe's servers - this will charge the user's card
     begin
-      charge = Stripe::Charge.create(
+      Stripe::Charge.create(
           :amount => @amount,
           :currency => 'usd',
-          :source => token,
+          :customer => customer.id,
           :description => 'Example charge custom form'
       )
       redirect_to charges_thanks_path
